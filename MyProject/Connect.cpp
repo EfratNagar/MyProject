@@ -1,6 +1,5 @@
 #include <string>
 #include <iostream>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <chrono>
@@ -21,8 +20,6 @@
 using namespace std;
 
 
-#include <iostream>
-#include <stdio.h>
 
 string ReceiveArrayFromPythonAndPrintTer() {
     FILE* pipe;
@@ -133,10 +130,6 @@ string ReceiveArrayFromPythonAndPrintTer() {
 //}
 
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cstdio>
 
 //void ReceiveArrayFromPythonAndPrintKid()
 //{
@@ -184,10 +177,6 @@ string ReceiveArrayFromPythonAndPrintTer() {
 //    }
 //}
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cstdio>
 
 std::vector<std::string> ReceiveArrayFromPython()
 {
@@ -228,8 +217,6 @@ std::vector<std::string> ReceiveArrayFromPython()
         }
         for (const std::string& full_name : identified_people)
                        std::cout << full_name << " ";
-
-            
 
         _pclose(pipe);
 

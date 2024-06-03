@@ -5,10 +5,6 @@
 #include "Robot.h"
 #include "ultrasonic.h"
 #include "TouchSensor.h"
-#include "gasSensor.h"
-//#include "Lists.h"
-#include "Elements.h"
-#include "move.h"
 #include "OppositeWall.h"
 #include "Robot2.h"
 #include <map>
