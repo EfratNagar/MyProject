@@ -1,6 +1,8 @@
 #pragma once
 #include <list>
 #include <string>
+#include <vector>
+//מבנה הרשימות
 class Navigations {
    
 public:
@@ -12,11 +14,10 @@ public:
 
 };
 struct Bomb {
-    int x;
-    int y;
-    int misPicture;
+    double x;
+    double y;
 public:
-    Bomb(int x, int y, int misPicture) :x(x), y(y), misPicture(misPicture){}
+    Bomb(double x, double y) :x(x), y(y){}
    
 };
 struct Terrorist {
@@ -29,7 +30,7 @@ public:
 struct Kidnapped {
     int x;
     int y;
-    std::list<std::string> NameList;
+    std::vector<std::string> NameList;
 public:
-    Kidnapped(int x, int y, std::list<std::string> NameList) :x(x), y(y), NameList(NameList){}
+    Kidnapped(int x, int y, std::vector<std::string> NameList) :x(x), y(y), NameList(NameList){}
 };

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+//מבנה הרובוט
 void MoveRobot(Robot2& r)
 {
     r.Setx(r.Getx()+ r.GetDirectionX());

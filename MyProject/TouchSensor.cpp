@@ -18,12 +18,12 @@ int simulateTouchSensorBehavior() {
 
     if (std::getline(file, line)) {
         if (line == "contact") {
-            std::cout << "Contact with the wall - Move the robot forward\n";
+            //std::cout << "Contact with the wall - Move the robot forward\n";
             // Add code to move the robot forward
             tuch = 1;
         }
         else if (line == "no_contact") {
-            std::cout << "No contact with the wall - Move the robot backward\n";
+           // std::cout << "No contact with the wall - Move the robot backward\n";
             // Add code to move the robot backward
             tuch = 0;
         }

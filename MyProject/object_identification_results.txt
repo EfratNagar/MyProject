@@ -1,0 +1,2 @@
+Object: 6.0, Confidence: 0.25, Image: 3.png
+Object: 3.0, Confidence: 0.57, Image: 4.png

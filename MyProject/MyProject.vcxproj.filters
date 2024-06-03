@@ -27,9 +27,6 @@
     <ClCompile Include="gasSensor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Robot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OppositeWall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Connect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NextLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
