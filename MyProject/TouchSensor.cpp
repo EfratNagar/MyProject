@@ -1,4 +1,4 @@
-//פונקציה לבדיקת האם החיישן נגיע נוגע בקיר
+// פונקציה לבדיקת האם החיישן נוגע בקיר לבדיקה האם המנהרה מסתימת
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -17,14 +17,10 @@ int simulateTouchSensorBehavior() {
     }
 
     if (std::getline(file, line)) {
-        if (line == "contact") {
-            //std::cout << "Contact with the wall - Move the robot forward\n";
-            // Add code to move the robot forward
+        if (line == "tuch") {
             tuch = 1;
         }
-        else if (line == "no_contact") {
-           // std::cout << "No contact with the wall - Move the robot backward\n";
-            // Add code to move the robot backward
+        else if (line == "no_tuch") {
             tuch = 0;
         }
         else {

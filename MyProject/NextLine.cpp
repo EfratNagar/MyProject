@@ -1,3 +1,4 @@
+//זימון תמונה מקובץ
 using namespace std;
 #include "../httplib/cpp-httplib-master/httplib.h"
 #include <vector>
@@ -39,7 +40,7 @@ std::string fil(const std::string& filename) {
     return lastImagePath;
 }
 std::string filKid() {
-    static std::ifstream file("kid_image.txt");
+    static std::ifstream file("AllFile/kid_image.txt");
     static std::string lastImagePath;
     std::string imagePath;
 
@@ -66,7 +67,7 @@ std::string filKid() {
     return lastImagePath;
 }
 std::string filBomb() {
-    static std::ifstream file("file_bombs.txt");
+    static std::ifstream file("AllFile/file_bombs.txt");
     static std::string lastImagePath;
     std::string imagePath;
 

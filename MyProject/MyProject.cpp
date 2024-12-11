@@ -1,5 +1,4 @@
-﻿// MyProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-#include "../httplib/cpp-httplib-master/httplib.h"
+﻿#include "../httplib/cpp-httplib-master/httplib.h"
 #include <vector>
 #include <string>
 #include "move.h"
@@ -10,12 +9,11 @@
 #include "TouchSensor.h"
 #include "OppositeWall.h"
 #include "json.hpp"
-//#include <nlohmann/json.hpp> // Include a JSON library like nlohmann/json for serialization
 
 using namespace std;
 //הרשימות
 list<Navigations> NavigationList;// רשימה למקומי הנקודות בהם דרך הרובוט
-list<Navigations> NavigationListExit;// רשימה למקומי הנקודות בהם דרך הרובוט
+list<Navigations> NavigationListExit;// רשימה למקומי הנקודות בהם דרך הרובוט כשהיה ביציאה
 std::list<Bomb> BombList;  //רשימה בה יש את מיקומי חומרי הנפץ וזה כולל המיקום בו עומד הרובוט ומסר תמונה בה זוהה
 std::list<Terrorist> TerroristList; //רשימה בה יש את כמות המחבלים שיש בחצי מטר הנוכחי וזה כולל המיקום בו עומד הרובוט
 std::list<Kidnapped> KidnappedList;//רשימה בה יש את שמות החטופים שיש בחצי מטר הנוכחי וזה כולל המיקום בו עומד הרובוט
@@ -30,6 +28,7 @@ void sendNavigationList(httplib::Response& res, const std::vector<Navigations>& 
     res.set_content(jsonList.dump(), "application/json");
     res.set_header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow requests from React client
 }
+
 void sendNavigationListExit(httplib::Response& res, const std::vector<Navigations>& NavigationListExit) {
     nlohmann::json jsonList;
     for (const auto& nav : NavigationListExit) {
@@ -103,87 +102,9 @@ int main() {
 }
 
 
-
-//int main() {
-//    mainFunction();
-//    httplib::Server svr;
-//    std::vector<Navigations> vecNavigationList(NavigationList.begin(), NavigationList.end());
-//
-//
-//    svr.Get("/getNavigationList", [&](const httplib::Request& /*req*/, httplib::Response& res) {
-//        sendNavigationList(res, vecNavigationList);
-//        });
-//
-//    svr.listen("localhost", 55555);
-//
-//    return 0;
-//}
-
-//void sendNavigationList(httplib::Response& res, const std::vector<Navigations>& NavigationList) {
-//    
-//    nlohmann::json jsonList;
-//    for (const auto& nav : NavigationList) {
-//        jsonList.push_back({ {"X", nav.x}, {"Y", nav.y} });
-//    }
-//    res.set_content(jsonList.dump(), "application/json");
-//    res.set_header("Access-Control-Allow-Origin", "http://localhost:3000"); // Allow requests from React client
-//}
-
-
-
-//void sendList(httplib::Response& res) {
-//
-//    mainFunction();
-//    std::vector<std::string> itemList = { "Item1", "Item2", "Item3" };
-//    std::string serializedList;
-//    for (const auto& item : itemList) {
-//        serializedList += item + ",";
-//    }
-//    res.set_content(serializedList, "text/plain");
-//    res.set_header("Access-Control-Allow-Origin", "http://localhost:3000");
-//}
-//
-//int main() {
-//    httplib::Server svr;
-//
-//    svr.Get("/getlist", [](const httplib::Request& /*req*/, httplib::Response& res) {
-//        sendList(res);
-//        });
-//
-//    svr.listen("localhost", 55555);
-//
-//    return 0;
-//}
-
-//std::string fil() {
-//    static std::ifstream file("image_paths.txt");
-//    static std::string lastImagePath;
-//    std::string imagePath;
-//
-//    // Read the next line from the file
-//    if (std::getline(file, imagePath))
-//    {
-//        // Remove newline character if present
-//        imagePath.erase(std::remove(imagePath.begin(), imagePath.end(), '\n'), imagePath.end());
-//        lastImagePath = imagePath; // Update last read image path
-//    }
-//    else
-//    {
-//        file.clear(); // Clear the end-of-file flag
-//        file.seekg(0, std::ios::beg); // Move file pointer to the beginning
-//        std::getline(file, lastImagePath); // Read the first line
-//    }
-//
-//    return lastImagePath;
-//}
-
-
-//std::string fil() {
-
-
 void mainFunction()
 {
-    int robotPosition = 0; // אתחיל את מיקום הרובוט
+    int robotPosition = 0; // איתחול את מיקום הרובוט
     Robot2 r(0, 0, 0, 1);
 
     std::map<std::string, void (*)(Robot2&)> directionsMap;
@@ -196,9 +117,6 @@ void mainFunction()
     directionsMap["rl"] = &TurnStraight;
     directionsMap["bl"] = &TurnRight;
     directionsMap["br"] = &TurnLeft;
-
-
-
 
     string filePath = "C:/Users/WIN 11/PycharmProjects/Language/file/distance_data.txt";
     string filePathOpposite = "C:/Users/WIN 11/PycharmProjects/Language/file/Opposite.txt";
@@ -217,22 +135,19 @@ void mainFunction()
     vector<std::string>vcto;
     while (r.GetSituation()<2)
     {
-        mone++;
         if (readAndProcessNextLine() == 0) {
             std::vector<int> identified_Bombs = ReceiveArrayFromPythonBomb(filBomb());
             for (const int& value : identified_Bombs) {
-                bx = r.Getx() + r.GetDirectionX() / 2.0 + r.GetDirectionY() * -value/*(value == 0 ? 1 : value)*/;//חישוב מיקום חומר הנפץ
+                bx = r.Getx() + r.GetDirectionX() / 2.0 + r.GetDirectionY() * -value;///חישוב מיקום חומר הנפץ
                 by = r.Gety() + r.GetDirectionY() / 2.0 + r.GetDirectionX() * value;
                 Bomb bom = { bx,by };//קבלת נתונים מפונקצייה של חיפוש חומרי נפץ
                 BombList.push_back(bom);
-            }
-            
-            
+            }      
         }
         Navigations nvi{ r.Getx(),r.Gety() };
         //קבלת נתונים מפונקצייה של זיהוי פנים
         vcto = ReceiveArrayFromPythonKid(filKid());//הכנסת שמות החטופים לוקטור
-        l=ReceiveArrayFromPythonAndPrintTer(fil("image_paths.txt"));
+        l=ReceiveArrayFromPythonAndPrintTer(fil("AllFile/image_paths.txt"));
 
         m = vcto.size();//כמות החטופים
         Terrorist ter = { r.Getx(),r.Gety(),l -m/*כמות מחבלים*/ };
@@ -281,8 +196,9 @@ void mainFunction()
 
         }
     }
-    //הדפסה של כל הנקדות בהם עברתי
-    //std::cout << "Elements of the list:" << std::endl;
+    std::cout << "client runner" << std::endl;
+
+   /* 
     for (const auto& nav : NavigationList) {
         std::cout << "x: " << nav.x << ", y: " << nav.y << std::endl;
     }
@@ -300,81 +216,6 @@ void mainFunction()
     std::cout << "list Terrorist: " << endl;
     for (const auto& te : TerroristList) {
         std::cout << "x: " << te.x << ", y: " << te.y << ",terrorist: " << te.count << std::endl;
-    }
-
-
-    printf("kkk");
-   int o= ReceiveArrayFromPythonAndPrintTer(fil("image_paths.txt"));
-   int vc= vcto.size();
-   //ReceiveArrayFromPythonKid(filKid());
-    //ReceiveArrayFromPythonKid(fil());
-    //printf("\n");
-    //ReceiveArrayFromPythonKid(fil());
-    //ReceiveArrayFromPythonKid();
-    //printf("hhhhh");
-    //ReceiveArrayFromPythonKid(fil());
-
-    //ReceiveArrayFromPythonAndPrintTer();
-    //ReceiveArrayFromPython();
-    //ReceiveArrayFromPython();
+    }*/
 }
-
-
-
-
-
-
-
-//if (robotDistanceSensor(filePath) < 10){ //בדיקה האם קיים במרחק של עד 10 קיר
-//    if (robotDistanceSensorOpposite(filePathOpposite) < 10)//בדיקה האם מקדימה יש קיר
-//        TurnLeft(r);
-//    else {
-//        MoveRobot(r);
-//        NavigationList.push_back(nvi);
-//    }
-//}
-//else
-//{
-//    TurnRight(r);
-
-//}
-////בודק האם המנהרה נגמרה
-//if(simulateTouchSensorBehavior()==0){
-//    if (r.GetSituation() == 0) {
-//        TurnLeft(r);
-//        for (int i = 0; i < 150 / 30; i++)
-//            MoveRobot(r);
-//        TurnLeft(r);
-//        r.SetSituation();
-//    }
-//}
-// 
-// 
-
-
-
-////
-//
-//
-//
-////
-////
-////int u =readAndProcessNextLine();  
-//cout << robotDistanceSensor(filePath) << endl;
-//cout << robotDistanceSensorOpposite(filePathOpposite) << endl;
-//cout << distance2 << endl;
-//int u= simulateTouchSensorBehavior();
- //מדמים את כניסת הרובוט למנהרה
-//while (1) { // מניחים שאורך המנהרה הוא 10 יחידות
-//    //קריאה מקובץ טקסט של 
-//    //פונקציות של כל זיהויים
-//    //שליחת התונים לריאקט
-//    moveForward(robotPosition); // מזיזים את הרובוט קדימה
-//    if (checkWallOnRight()) {
-//        turnLeft(); // פונים שמאלה אם יש קיר בצד ימין
-//    }
-//    // ניתן להוסיף כאן קוד לסריקת הזיהות
-//    // חוזרים על התהליך עד סופה של המנהרה
-//}
-
 

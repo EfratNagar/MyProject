@@ -1,3 +1,4 @@
+//קריאה מחיישן גז לבדיקה האם יש גז בחצי מטר קדימה
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,11 +8,9 @@ std::ifstream file("C:/Users/WIN 11/PycharmProjects/Language/file/gas_sensor_dat
 int detectExplosives(double gasReading) {
     int y;
     if (gasReading > 0.5) {
-        //std::cout << "Explosive material detected within the nearest half meter." << std::endl;
         y = 0;
     }
     else {
-        //std::cout << "No explosive material detected within the nearest half meter." << std::endl;
         y = 1;
     }
     return y;

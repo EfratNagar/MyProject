@@ -32,7 +32,7 @@ int ReceiveArrayFromPythonAndPrintTer(std::string imagePath) {
     if (imagePath == "")
         return 0;
     try {
-         std::string command = "python.exe yolo.py " + imagePath + "";
+         std::string command = "python.exe python/yolo.py " + imagePath + "";
 
         pipe = _popen(command.c_str(), "r");
         // Read the output from the Python script line by line
@@ -55,8 +55,9 @@ int ReceiveArrayFromPythonAndPrintTer(std::string imagePath) {
     }
     catch (const std::exception& e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;
-    }
+    }  
     return stoi(result);
+
 }
 
 
@@ -72,7 +73,7 @@ std::vector<std::string> ReceiveArrayFromPythonKid(std::string imagePath)
     try
     {
         // Calling the Python script with the image path
-        std::string command = "python.exe kid.py " + imagePath+"";
+        std::string command = "python.exe python/kid.py " + imagePath+"";
 
         pipe = _popen(command.c_str(), "r");
         while (!feof(pipe))
@@ -129,7 +130,7 @@ std::vector<int> ReceiveArrayFromPythonBomb(std::string imagePath)
     try
     {
         // Calling the Python script with the image path
-        std::string command = "python.exe yoloBombs.py " + imagePath;
+        std::string command = "python.exe python/yoloBombs.py " + imagePath;
 
         pipe = _popen(command.c_str(), "r");
         while (!feof(pipe))
