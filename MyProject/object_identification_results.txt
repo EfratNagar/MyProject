@@ -1,2 +1,5 @@
-Object: 3.0, Confidence: 0.81, Image: 0.png
-Object: 0.0, Confidence: 0.91, Image: 2.png
+Object: 6.0, Confidence: 0.43, Image: 0.png
+Object: 7.0, Confidence: 0.90, Image: 1.png
+Object: 6.0, Confidence: 0.43, Image: 2.png
+Object: 6.0, Confidence: 0.43, Image: 3.png
+Object: 6.0, Confidence: 0.43, Image: 4.png
